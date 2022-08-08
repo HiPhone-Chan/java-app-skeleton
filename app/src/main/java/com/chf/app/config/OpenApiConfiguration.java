@@ -1,0 +1,27 @@
+package com.chf.app.config;
+
+import org.springdoc.core.GroupedOpenApi;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+
+import com.chf.app.constants.SystemConstants;
+import com.chf.framework.config.ConfigProperties;
+import com.chf.framework.config.ProfileConstants;
+import com.chf.framework.config.apidoc.customizer.MyOpenApiCustomizer;
+
+@Configuration
+@Profile(ProfileConstants.SPRING_PROFILE_API_DOCS)
+public class OpenApiConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean(name = "apiFirstGroupedOpenAPI")
+    public GroupedOpenApi apiFirstGroupedOpenAPI(MyOpenApiCustomizer openApiCustomizer,
+            ConfigProperties configProperties) {
+        ConfigProperties.ApiDocs properties = configProperties.getApiDocs();
+        return GroupedOpenApi.builder().group("openapi").addOpenApiCustomiser(openApiCustomizer)
+                .packagesToScan(SystemConstants.BASE_PACKAGE).pathsToMatch(properties.getDefaultIncludePattern())
+                .build();
+    }
+}
