@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.chf.app.constants.SystemConstants;
 import com.chf.framework.config.ConfigProperties;
 import com.chf.framework.config.ProfileConstants;
 import com.chf.framework.config.apidoc.customizer.MyOpenApiCustomizer;

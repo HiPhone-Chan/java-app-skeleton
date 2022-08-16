@@ -40,6 +40,12 @@
       </dependency>
 
       <dependency>
+        <groupId>com.chf</groupId>
+        <artifactId>app-commons</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
         <version>${spring-boot.version}</version>
@@ -85,12 +91,14 @@
         <scope>runtime</scope>
       </dependency>
 
+      <!-- commons -->
       <dependency>
         <groupId>commons-fileupload</groupId>
         <artifactId>commons-fileupload</artifactId>
         <version>${commons-fileupload.version}</version>
       </dependency>
 
+      <!-- mapstruct -->
       <dependency>
         <groupId>org.mapstruct</groupId>
         <artifactId>mapstruct</artifactId>

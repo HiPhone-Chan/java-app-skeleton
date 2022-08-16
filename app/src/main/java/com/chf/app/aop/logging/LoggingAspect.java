@@ -1,6 +1,5 @@
 package com.chf.app.aop.logging;
 
-import static com.chf.app.constants.SystemConstants.BASE_PACKAGE;
 import static com.chf.framework.config.ProfileConstants.SPRING_PROFILE_DEVELOPMENT;
 
 import java.util.Arrays;
@@ -16,11 +15,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 
-import com.chf.app.exception.ServiceException;
+import com.chf.commons.exceptioin.ServiceException;
 
 @Aspect
 public class LoggingAspect {
 
+    private final String BASE_PACKAGE = "com.chf";
     private final Environment env;
 
     public LoggingAspect(Environment env) {

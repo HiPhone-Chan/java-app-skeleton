@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
 import com.chf.app.aop.logging.LoggingAspect;
+import com.chf.commons.aop.OperateLoggingAspect;
 import com.chf.framework.config.ProfileConstants;
 
 @Configuration
@@ -19,4 +20,8 @@ public class LoggingAspectConfiguration {
         return new LoggingAspect(env);
     }
 
+    @Bean
+    public OperateLoggingAspect operateLoggingAspect() {
+        return new OperateLoggingAspect();
+    }
 }

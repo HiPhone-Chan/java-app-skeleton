@@ -16,13 +16,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
 
-import com.chf.app.config.ApplicationProperties;
 import com.chf.framework.config.ConfigProperties;
 import com.chf.framework.config.ProfileConstants;
 import com.chf.framework.config.ProfileUtil;
 
 @SpringBootApplication
-@EnableConfigurationProperties({ ConfigProperties.class, ApplicationProperties.class })
+@EnableConfigurationProperties({ ConfigProperties.class })
 public class Application {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);

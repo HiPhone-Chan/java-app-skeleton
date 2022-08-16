@@ -12,17 +12,6 @@
     <archunit-junit5.version>0.22.0</archunit-junit5.version>
     <base-package>com.chf.app</base-package>
     <start-class>${base-package}.Application</start-class>
-    <!-- Plugin versions -->
-    <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
-    <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
-    <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
-    <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
-    <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
-    <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-    <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
-    <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
-    <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
-    <openapi-generator-maven-plugin.version>5.4.0</openapi-generator-maven-plugin.version>
   </properties>
 
   <dependencyManagement>
@@ -37,19 +26,14 @@
     </dependency>
 
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
+      <groupId>com.chf</groupId>
+      <artifactId>app-commons</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
       <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
     <!-- cache -->
@@ -73,44 +57,16 @@
       <artifactId>hibernate-jcache</artifactId>
     </dependency>
 
-    <!-- validator -->
+    <!-- commons -->
     <dependency>
-      <groupId>org.hibernate.validator</groupId>
-      <artifactId>hibernate-validator</artifactId>
-    </dependency>
-
-    <!-- secure -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-data</artifactId>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <optional>true</optional>
     </dependency>
 
     <dependency>
       <groupId>org.zalando</groupId>
       <artifactId>problem-spring-web</artifactId>
-    </dependency>
-
-    <!-- jwt -->
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt-impl</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt-jackson</artifactId>
-      <scope>runtime</scope>
     </dependency>
 
     <!-- data -->
@@ -135,32 +91,10 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
-    </dependency>
-
     <!-- apache commons -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-    </dependency>
-
-    <!-- mapstruct -->
-    <dependency>
-      <groupId>org.mapstruct</groupId>
-      <artifactId>mapstruct</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mapstruct</groupId>
-      <artifactId>mapstruct-processor</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <!-- open api -->
@@ -208,6 +142,7 @@
       <version>${archunit-junit5.version}</version>
       <scope>test</scope>
     </dependency>
+
   </dependencies>
 
 
@@ -258,18 +193,6 @@
           <configuration>
             <source>${java.version}</source>
             <target>${java.version}</target>
-            <annotationProcessorPaths>
-              <path>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-configuration-processor</artifactId>
-                <version>${spring-boot.version}</version>
-              </path>
-              <path>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-processor</artifactId>
-                <version>${mapstruct.version}</version>
-              </path>
-            </annotationProcessorPaths>
           </configuration>
         </plugin>
 

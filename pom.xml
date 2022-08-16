@@ -8,6 +8,7 @@
     <module>app</module>
     <module>framework</module>
     <module>dependencies</module>
+    <module>app-commons</module>
   </modules>
 
   <properties>

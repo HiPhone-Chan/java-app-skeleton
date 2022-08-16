@@ -13,9 +13,9 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.chf.app.domain.Authority;
-import com.chf.app.domain.User;
-import com.chf.app.repository.UserRepository;
+import com.chf.commons.domain.Authority;
+import com.chf.commons.domain.User;
+import com.chf.commons.repository.UserRepository;
 import com.chf.framework.config.ConfigProperties;
 
 @Configuration

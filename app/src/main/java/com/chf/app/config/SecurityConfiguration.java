@@ -15,9 +15,9 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
-import com.chf.app.constants.AuthoritiesConstants;
-import com.chf.app.security.jwt.JWTConfigurer;
-import com.chf.app.security.jwt.TokenProvider;
+import com.chf.commons.constants.AuthoritiesConstants;
+import com.chf.commons.security.jwt.JWTConfigurer;
+import com.chf.commons.security.jwt.TokenProvider;
 import com.chf.framework.config.ConfigProperties;
 
 @EnableWebSecurity
@@ -46,12 +46,6 @@ public class SecurityConfiguration     {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**").antMatchers("/h2-console/**").antMatchers("/test/**")
-//                .antMatchers("/pages/**");
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

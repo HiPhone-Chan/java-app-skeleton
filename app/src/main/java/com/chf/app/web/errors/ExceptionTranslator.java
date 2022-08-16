@@ -35,8 +35,11 @@ import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 
-import com.chf.app.constants.SystemConstants;
-import com.chf.app.exception.ServiceException;
+import com.chf.app.config.SystemConstants;
+import com.chf.commons.exceptioin.ServiceException;
+import com.chf.commons.web.errors.ErrorConstants;
+import com.chf.commons.web.errors.ErrorVM;
+import com.chf.commons.web.errors.FieldErrorVM;
 import com.chf.framework.config.ProfileConstants;
 
 /**
