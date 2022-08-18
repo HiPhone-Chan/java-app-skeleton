@@ -9,6 +9,7 @@
     <module>framework</module>
     <module>dependencies</module>
     <module>app-commons</module>
+    <module>admin-page</module>
   </modules>
 
   <properties>

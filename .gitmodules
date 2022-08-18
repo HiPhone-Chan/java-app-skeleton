@@ -1,0 +1,4 @@
+[submodule "admin-page/src/main/webapp"]
+	path = admin-page/src/main/webapp
+	url = https://github.com/HiPhone-Chan/vue3-admin.git
+	branch = backend
