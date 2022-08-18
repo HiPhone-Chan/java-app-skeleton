@@ -1,13 +1,12 @@
-package com.chf.app;
+package com.chf.commons;
 
 import static com.tngtech.archunit.base.DescribedPredicate.alwaysTrue;
 import static com.tngtech.archunit.core.domain.JavaClass.Predicates.belongToAnyOf;
 import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 
-import com.chf.app.config.ApplicationProperties;
 import com.chf.commons.constants.AuthoritiesConstants;
-import com.chf.commons.constants.ErrorCodeContants;
 import com.chf.commons.constants.CommonsConstants;
+import com.chf.commons.constants.ErrorCodeContants;
 import com.tngtech.archunit.core.importer.ImportOption.DoNotIncludeTests;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
@@ -20,20 +19,27 @@ class TechnicalStructureTest {
     // @formatter:off
     @ArchTest
     static final ArchRule respectsTechnicalArchitectureLayers = layeredArchitecture()
+        .layer("Aop").definedBy("..aop..")
         .layer("Config").definedBy("..config..")
         .layer("Web").definedBy("..web..")
+        .optionalLayer("Service").definedBy("..service..")
         .layer("Security").definedBy("..security..")
-
+        .layer("Persistence").definedBy("..repository..")
+        .layer("Domain").definedBy("..domain..")
+    
         .whereLayer("Config").mayNotBeAccessedByAnyLayer()
+        .whereLayer("Aop").mayNotBeAccessedByAnyLayer()
         .whereLayer("Web").mayOnlyBeAccessedByLayers("Config")
-        .whereLayer("Security").mayOnlyBeAccessedByLayers("Config", "Web")
-
+        .whereLayer("Service").mayOnlyBeAccessedByLayers("Web", "Config", "Aop")
+        .whereLayer("Security").mayOnlyBeAccessedByLayers("Config", "Service", "Web")
+        .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Service", "Security", "Web", "Config", "Aop")
+        .whereLayer("Domain").mayOnlyBeAccessedByLayers("Persistence", "Service", "Security", "Web", "Config", "Aop")
+    
         .ignoreDependency(belongToAnyOf(Application.class), alwaysTrue())
         .ignoreDependency(alwaysTrue(), belongToAnyOf(
             CommonsConstants.class,
             ErrorCodeContants.class,
-            AuthoritiesConstants.class,
-            ApplicationProperties.class
+            AuthoritiesConstants.class
         ));
     // @formatter:on
 }
