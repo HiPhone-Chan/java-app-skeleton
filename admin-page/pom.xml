@@ -7,6 +7,12 @@
   </parent>
   <artifactId>admin-page</artifactId>
 
+  <properties>
+    <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
+    <!-- These remain empty unless the corresponding profile is active -->
+    <build.mode />
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -24,6 +30,11 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
       </plugin>
     </plugins>
 
@@ -59,9 +70,30 @@
                 <executable>npm</executable>
                 <arguments>
                   <argument>run</argument>
-                  <argument>build:prod</argument>
+                  <argument>build${build.mode}</argument>
                 </arguments>
                 <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>copy-resources</id>
+              <phase>process-sources</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${basedir}/target/classes/static</outputDirectory>
+                <resources>
+                  <resource>
+                    <directory>${basedir}/src/main/webapp/dist/spa</directory>
+                  </resource>
+                </resources>
               </configuration>
             </execution>
           </executions>
@@ -69,4 +101,13 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <profiles>
+    <profile>
+      <id>pwa</id>
+      <properties>
+        <build.mode>:pwa</build.mode>
+      </properties>
+    </profile>
+  </profiles>
 </project>
