@@ -1,4 +1,4 @@
-package com.chf.commons.web.rest;
+package com.chf.app.web.rest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
