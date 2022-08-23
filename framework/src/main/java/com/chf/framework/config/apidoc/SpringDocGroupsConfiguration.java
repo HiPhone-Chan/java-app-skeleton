@@ -63,7 +63,7 @@ public class SpringDocGroupsConfiguration {
      */
     @Bean
     public MyOpenApiCustomizer myOpenApiCustomizer() {
-        log.debug("Initializing JHipster OpenApi customizer");
+        log.debug("Initializing App OpenApi customizer");
         return new MyOpenApiCustomizer(properties);
     }
 
@@ -105,7 +105,7 @@ public class SpringDocGroupsConfiguration {
     public GroupedOpenApi openAPIManagementGroupedOpenAPI(
             @Value("${spring.application.name:application}") String appName,
             ActuatorOpenApiCustomizer actuatorOpenApiCustomiser, ActuatorOperationCustomizer actuatorCustomizer) {
-        log.debug("Initializing JHipster OpenApi management group");
+        log.debug("Initializing App OpenApi management group");
         return GroupedOpenApi.builder().group(MANAGEMENT_GROUP_NAME).addOpenApiCustomiser(openApi -> {
             openApi.info(new Info().title(StringUtils.capitalize(appName) + " " + MANAGEMENT_TITLE_SUFFIX)
                     .description(MANAGEMENT_DESCRIPTION).version(properties.getVersion()));
