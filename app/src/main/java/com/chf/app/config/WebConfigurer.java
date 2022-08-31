@@ -27,6 +27,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
+import com.chf.commons.repository.OperationLogRepository;
+import com.chf.commons.web.filter.OperationLogFilter;
 import com.chf.framework.config.ConfigProperties;
 import com.chf.framework.config.ProfileConstants;
 import com.chf.framework.config.h2.H2ConfigurationHelper;
@@ -41,9 +43,13 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
     private final ConfigProperties configProperties;
 
-    public WebConfigurer(Environment env, ConfigProperties configProperties) {
+    private OperationLogRepository operationLogRepository;
+
+    public WebConfigurer(Environment env, ConfigProperties configProperties,
+            OperationLogRepository operationLogRepository) {
         this.env = env;
         this.configProperties = configProperties;
+        this.operationLogRepository = operationLogRepository;
     }
 
     @Override
@@ -55,6 +61,7 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         if (env.acceptsProfiles(Profiles.of(ProfileConstants.SPRING_PROFILE_DEVELOPMENT))) {
             initH2Console(servletContext);
         }
+
         log.info("Web application fully configured");
     }
 
@@ -89,6 +96,11 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
             return "";
         }
         return extractedPath.substring(0, extractionEndIndex);
+    }
+
+    @Bean
+    public OperationLogFilter OperationLogFilter() {
+        return new OperationLogFilter(operationLogRepository);
     }
 
     @Bean
