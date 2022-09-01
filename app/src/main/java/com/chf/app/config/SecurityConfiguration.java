@@ -18,12 +18,13 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 import com.chf.commons.constants.AuthoritiesConstants;
 import com.chf.commons.security.jwt.JWTConfigurer;
 import com.chf.commons.security.jwt.TokenProvider;
+import com.chf.commons.web.filter.OperationLogFilter;
 import com.chf.framework.config.ConfigProperties;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
-public class SecurityConfiguration     {
+public class SecurityConfiguration {
 
     private final ConfigProperties configProperties;
 
@@ -31,13 +32,16 @@ public class SecurityConfiguration     {
 
     private final CorsFilter corsFilter;
 
+    private final OperationLogFilter operationLogFilter;
+
     private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter,ConfigProperties configProperties, 
-            SecurityProblemSupport problemSupport) {
+    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter, ConfigProperties configProperties,
+            SecurityProblemSupport problemSupport, OperationLogFilter operationLogFilter) {
         super();
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
+        this.operationLogFilter = operationLogFilter;
         this.configProperties = configProperties;
         this.problemSupport = problemSupport;
     }
@@ -50,7 +54,9 @@ public class SecurityConfiguration     {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // @formatter:off
-        http.csrf().disable().addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+        http.csrf().disable()
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(operationLogFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(problemSupport).accessDeniedHandler(problemSupport)
                 .and()
                 .headers()
