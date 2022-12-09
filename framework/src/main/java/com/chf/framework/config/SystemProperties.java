@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.cors.CorsConfiguration;
 
-@ConfigurationProperties(prefix = "config", ignoreUnknownFields = false)
-public class ConfigProperties {
+@ConfigurationProperties(prefix = "sys", ignoreUnknownFields = false)
+public class SystemProperties {
 
     private final Async async = new Async();
 
@@ -169,11 +169,11 @@ public class ConfigProperties {
 
     public static class Async {
 
-        private int corePoolSize = ConfigDefaults.Async.corePoolSize;
+        private int corePoolSize = SystemDefaults.Async.corePoolSize;
 
-        private int maxPoolSize = ConfigDefaults.Async.maxPoolSize;
+        private int maxPoolSize = SystemDefaults.Async.maxPoolSize;
 
-        private int queueCapacity = ConfigDefaults.Async.queueCapacity;
+        private int queueCapacity = SystemDefaults.Async.queueCapacity;
 
         public int getCorePoolSize() {
             return corePoolSize;
@@ -210,7 +210,7 @@ public class ConfigProperties {
 
         public static class Cache {
 
-            private int timeToLiveInDays = ConfigDefaults.Http.Cache.timeToLiveInDays;
+            private int timeToLiveInDays = SystemDefaults.Http.Cache.timeToLiveInDays;
 
             public int getTimeToLiveInDays() {
                 return timeToLiveInDays;
@@ -285,9 +285,9 @@ public class ConfigProperties {
 
         public static class Hazelcast {
 
-            private int timeToLiveSeconds = ConfigDefaults.Cache.Hazelcast.timeToLiveSeconds;
+            private int timeToLiveSeconds = SystemDefaults.Cache.Hazelcast.timeToLiveSeconds;
 
-            private int backupCount = ConfigDefaults.Cache.Hazelcast.backupCount;
+            private int backupCount = SystemDefaults.Cache.Hazelcast.backupCount;
 
             public int getTimeToLiveSeconds() {
                 return timeToLiveSeconds;
@@ -308,9 +308,9 @@ public class ConfigProperties {
 
         public static class Caffeine {
 
-            private int timeToLiveSeconds = ConfigDefaults.Cache.Caffeine.timeToLiveSeconds;
+            private int timeToLiveSeconds = SystemDefaults.Cache.Caffeine.timeToLiveSeconds;
 
-            private long maxEntries = ConfigDefaults.Cache.Caffeine.maxEntries;
+            private long maxEntries = SystemDefaults.Cache.Caffeine.maxEntries;
 
             public int getTimeToLiveSeconds() {
                 return timeToLiveSeconds;
@@ -331,9 +331,9 @@ public class ConfigProperties {
 
         public static class Ehcache {
 
-            private int timeToLiveSeconds = ConfigDefaults.Cache.Ehcache.timeToLiveSeconds;
+            private int timeToLiveSeconds = SystemDefaults.Cache.Ehcache.timeToLiveSeconds;
 
-            private long maxEntries = ConfigDefaults.Cache.Ehcache.maxEntries;
+            private long maxEntries = SystemDefaults.Cache.Ehcache.maxEntries;
 
             public int getTimeToLiveSeconds() {
                 return timeToLiveSeconds;
@@ -354,9 +354,9 @@ public class ConfigProperties {
 
         public static class Infinispan {
 
-            private String configFile = ConfigDefaults.Cache.Infinispan.configFile;
+            private String configFile = SystemDefaults.Cache.Infinispan.configFile;
 
-            private boolean statsEnabled = ConfigDefaults.Cache.Infinispan.statsEnabled;
+            private boolean statsEnabled = SystemDefaults.Cache.Infinispan.statsEnabled;
 
             private final Local local = new Local();
 
@@ -394,9 +394,9 @@ public class ConfigProperties {
 
             public static class Local {
 
-                private long timeToLiveSeconds = ConfigDefaults.Cache.Infinispan.Local.timeToLiveSeconds;
+                private long timeToLiveSeconds = SystemDefaults.Cache.Infinispan.Local.timeToLiveSeconds;
 
-                private long maxEntries = ConfigDefaults.Cache.Infinispan.Local.maxEntries;
+                private long maxEntries = SystemDefaults.Cache.Infinispan.Local.maxEntries;
 
                 public long getTimeToLiveSeconds() {
                     return timeToLiveSeconds;
@@ -418,11 +418,11 @@ public class ConfigProperties {
 
             public static class Distributed {
 
-                private long timeToLiveSeconds = ConfigDefaults.Cache.Infinispan.Distributed.timeToLiveSeconds;
+                private long timeToLiveSeconds = SystemDefaults.Cache.Infinispan.Distributed.timeToLiveSeconds;
 
-                private long maxEntries = ConfigDefaults.Cache.Infinispan.Distributed.maxEntries;
+                private long maxEntries = SystemDefaults.Cache.Infinispan.Distributed.maxEntries;
 
-                private int instanceCount = ConfigDefaults.Cache.Infinispan.Distributed.instanceCount;
+                private int instanceCount = SystemDefaults.Cache.Infinispan.Distributed.instanceCount;
 
                 public long getTimeToLiveSeconds() {
                     return timeToLiveSeconds;
@@ -451,9 +451,9 @@ public class ConfigProperties {
 
             public static class Replicated {
 
-                private long timeToLiveSeconds = ConfigDefaults.Cache.Infinispan.Replicated.timeToLiveSeconds;
+                private long timeToLiveSeconds = SystemDefaults.Cache.Infinispan.Replicated.timeToLiveSeconds;
 
-                private long maxEntries = ConfigDefaults.Cache.Infinispan.Replicated.maxEntries;
+                private long maxEntries = SystemDefaults.Cache.Infinispan.Replicated.maxEntries;
 
                 public long getTimeToLiveSeconds() {
                     return timeToLiveSeconds;
@@ -476,16 +476,16 @@ public class ConfigProperties {
 
         public static class Memcached {
 
-            private boolean enabled = ConfigDefaults.Cache.Memcached.enabled;
+            private boolean enabled = SystemDefaults.Cache.Memcached.enabled;
 
             /**
              * Comma or whitespace separated list of servers' addresses.
              */
-            private String servers = ConfigDefaults.Cache.Memcached.servers;
+            private String servers = SystemDefaults.Cache.Memcached.servers;
 
-            private int expiration = ConfigDefaults.Cache.Memcached.expiration;
+            private int expiration = SystemDefaults.Cache.Memcached.expiration;
 
-            private boolean useBinaryProtocol = ConfigDefaults.Cache.Memcached.useBinaryProtocol;
+            private boolean useBinaryProtocol = SystemDefaults.Cache.Memcached.useBinaryProtocol;
 
             private Authentication authentication = new Authentication();
 
@@ -527,7 +527,7 @@ public class ConfigProperties {
 
             public static class Authentication {
 
-                private boolean enabled = ConfigDefaults.Cache.Memcached.Authentication.enabled;
+                private boolean enabled = SystemDefaults.Cache.Memcached.Authentication.enabled;
                 private String username;
                 private String password;
 
@@ -561,13 +561,13 @@ public class ConfigProperties {
         }
 
         public static class Redis {
-            private String[] server = ConfigDefaults.Cache.Redis.server;
-            private int expiration = ConfigDefaults.Cache.Redis.expiration;
-            private boolean cluster = ConfigDefaults.Cache.Redis.cluster;
-            private int connectionPoolSize = ConfigDefaults.Cache.Redis.connectionPoolSize;
-            private int connectionMinimumIdleSize = ConfigDefaults.Cache.Redis.connectionMinimumIdleSize;
-            private int subscriptionConnectionPoolSize = ConfigDefaults.Cache.Redis.subscriptionConnectionPoolSize;
-            private int subscriptionConnectionMinimumIdleSize = ConfigDefaults.Cache.Redis.subscriptionConnectionMinimumIdleSize;
+            private String[] server = SystemDefaults.Cache.Redis.server;
+            private int expiration = SystemDefaults.Cache.Redis.expiration;
+            private boolean cluster = SystemDefaults.Cache.Redis.cluster;
+            private int connectionPoolSize = SystemDefaults.Cache.Redis.connectionPoolSize;
+            private int connectionMinimumIdleSize = SystemDefaults.Cache.Redis.connectionMinimumIdleSize;
+            private int subscriptionConnectionPoolSize = SystemDefaults.Cache.Redis.subscriptionConnectionPoolSize;
+            private int subscriptionConnectionMinimumIdleSize = SystemDefaults.Cache.Redis.subscriptionConnectionMinimumIdleSize;
 
             public String[] getServer() {
                 return server;
@@ -633,11 +633,11 @@ public class ConfigProperties {
 
     public static class Mail {
 
-        private boolean enabled = ConfigDefaults.Mail.enabled;
+        private boolean enabled = SystemDefaults.Mail.enabled;
 
-        private String from = ConfigDefaults.Mail.from;
+        private String from = SystemDefaults.Mail.from;
 
-        private String baseUrl = ConfigDefaults.Mail.baseUrl;
+        private String baseUrl = SystemDefaults.Mail.baseUrl;
 
         public boolean isEnabled() {
             return enabled;
@@ -666,7 +666,7 @@ public class ConfigProperties {
 
     public static class Security {
 
-        private String contentSecurityPolicy = ConfigDefaults.Security.contentSecurityPolicy;
+        private String contentSecurityPolicy = SystemDefaults.Security.contentSecurityPolicy;
 
         private final ClientAuthorization clientAuthorization = new ClientAuthorization();
 
@@ -702,13 +702,13 @@ public class ConfigProperties {
 
         public static class ClientAuthorization {
 
-            private String accessTokenUri = ConfigDefaults.Security.ClientAuthorization.accessTokenUri;
+            private String accessTokenUri = SystemDefaults.Security.ClientAuthorization.accessTokenUri;
 
-            private String tokenServiceId = ConfigDefaults.Security.ClientAuthorization.tokenServiceId;
+            private String tokenServiceId = SystemDefaults.Security.ClientAuthorization.tokenServiceId;
 
-            private String clientId = ConfigDefaults.Security.ClientAuthorization.clientId;
+            private String clientId = SystemDefaults.Security.ClientAuthorization.clientId;
 
-            private String clientSecret = ConfigDefaults.Security.ClientAuthorization.clientSecret;
+            private String clientSecret = SystemDefaults.Security.ClientAuthorization.clientSecret;
 
             public String getAccessTokenUri() {
                 return accessTokenUri;
@@ -753,13 +753,13 @@ public class ConfigProperties {
 
             public static class Jwt {
 
-                private String secret = ConfigDefaults.Security.Authentication.Jwt.secret;
+                private String secret = SystemDefaults.Security.Authentication.Jwt.secret;
 
-                private String base64Secret = ConfigDefaults.Security.Authentication.Jwt.base64Secret;
+                private String base64Secret = SystemDefaults.Security.Authentication.Jwt.base64Secret;
 
-                private long tokenValidityInSeconds = ConfigDefaults.Security.Authentication.Jwt.tokenValidityInSeconds;
+                private long tokenValidityInSeconds = SystemDefaults.Security.Authentication.Jwt.tokenValidityInSeconds;
 
-                private long tokenValidityInSecondsForRememberMe = ConfigDefaults.Security.Authentication.Jwt.tokenValidityInSecondsForRememberMe;
+                private long tokenValidityInSecondsForRememberMe = SystemDefaults.Security.Authentication.Jwt.tokenValidityInSecondsForRememberMe;
 
                 public String getSecret() {
                     return secret;
@@ -798,7 +798,7 @@ public class ConfigProperties {
         public static class RememberMe {
 
             @NotNull
-            private String key = ConfigDefaults.Security.RememberMe.key;
+            private String key = SystemDefaults.Security.RememberMe.key;
 
             public String getKey() {
                 return key;
@@ -824,35 +824,35 @@ public class ConfigProperties {
 
     public static class ApiDocs {
 
-        private String title = ConfigDefaults.ApiDocs.title;
+        private String title = SystemDefaults.ApiDocs.title;
 
-        private String description = ConfigDefaults.ApiDocs.description;
+        private String description = SystemDefaults.ApiDocs.description;
 
-        private String version = ConfigDefaults.ApiDocs.version;
+        private String version = SystemDefaults.ApiDocs.version;
 
-        private String termsOfServiceUrl = ConfigDefaults.ApiDocs.termsOfServiceUrl;
+        private String termsOfServiceUrl = SystemDefaults.ApiDocs.termsOfServiceUrl;
 
-        private String contactName = ConfigDefaults.ApiDocs.contactName;
+        private String contactName = SystemDefaults.ApiDocs.contactName;
 
-        private String contactUrl = ConfigDefaults.ApiDocs.contactUrl;
+        private String contactUrl = SystemDefaults.ApiDocs.contactUrl;
 
-        private String contactEmail = ConfigDefaults.ApiDocs.contactEmail;
+        private String contactEmail = SystemDefaults.ApiDocs.contactEmail;
 
-        private String license = ConfigDefaults.ApiDocs.license;
+        private String license = SystemDefaults.ApiDocs.license;
 
-        private String licenseUrl = ConfigDefaults.ApiDocs.licenseUrl;
+        private String licenseUrl = SystemDefaults.ApiDocs.licenseUrl;
 
-        private String defaultIncludePattern = ConfigDefaults.ApiDocs.defaultIncludePattern;
+        private String defaultIncludePattern = SystemDefaults.ApiDocs.defaultIncludePattern;
 
-        private String managementIncludePattern = ConfigDefaults.ApiDocs.managementIncludePattern;
+        private String managementIncludePattern = SystemDefaults.ApiDocs.managementIncludePattern;
 
-        private String host = ConfigDefaults.ApiDocs.host;
+        private String host = SystemDefaults.ApiDocs.host;
 
-        private String[] protocols = ConfigDefaults.ApiDocs.protocols;
+        private String[] protocols = SystemDefaults.ApiDocs.protocols;
 
         private Server[] servers = {};
 
-        private boolean useDefaultResponseMessages = ConfigDefaults.ApiDocs.useDefaultResponseMessages;
+        private boolean useDefaultResponseMessages = SystemDefaults.ApiDocs.useDefaultResponseMessages;
 
         public String getTitle() {
             return title;
@@ -1007,7 +1007,7 @@ public class ConfigProperties {
 
     public static class Logging {
 
-        private boolean useJsonFormat = ConfigDefaults.Logging.useJsonFormat;
+        private boolean useJsonFormat = SystemDefaults.Logging.useJsonFormat;
 
         private final Logstash logstash = new Logstash();
 
@@ -1025,13 +1025,13 @@ public class ConfigProperties {
 
         public static class Logstash {
 
-            private boolean enabled = ConfigDefaults.Logging.Logstash.enabled;
+            private boolean enabled = SystemDefaults.Logging.Logstash.enabled;
 
-            private String host = ConfigDefaults.Logging.Logstash.host;
+            private String host = SystemDefaults.Logging.Logstash.host;
 
-            private int port = ConfigDefaults.Logging.Logstash.port;
+            private int port = SystemDefaults.Logging.Logstash.port;
 
-            private int queueSize = ConfigDefaults.Logging.Logstash.queueSize;
+            private int ringBufferSize = SystemDefaults.Logging.Logstash.ringBufferSize;
 
             public boolean isEnabled() {
                 return enabled;
@@ -1057,19 +1057,19 @@ public class ConfigProperties {
                 this.port = port;
             }
 
-            public int getQueueSize() {
-                return queueSize;
+            public int getRingBufferSize() {
+                return ringBufferSize;
             }
 
-            public void setQueueSize(int queueSize) {
-                this.queueSize = queueSize;
+            public void setRingBufferSize(int ringBufferSize) {
+                this.ringBufferSize = ringBufferSize;
             }
         }
     }
 
     public static class Social {
 
-        private String redirectAfterSignIn = ConfigDefaults.Social.redirectAfterSignIn;
+        private String redirectAfterSignIn = SystemDefaults.Social.redirectAfterSignIn;
 
         public String getRedirectAfterSignIn() {
             return redirectAfterSignIn;
@@ -1088,7 +1088,7 @@ public class ConfigProperties {
             return rateLimiting;
         }
 
-        private Map<String, List<String>> authorizedMicroservicesEndpoints = ConfigDefaults.Gateway.authorizedMicroservicesEndpoints;
+        private Map<String, List<String>> authorizedMicroservicesEndpoints = SystemDefaults.Gateway.authorizedMicroservicesEndpoints;
 
         public Map<String, List<String>> getAuthorizedMicroservicesEndpoints() {
             return authorizedMicroservicesEndpoints;
@@ -1100,11 +1100,11 @@ public class ConfigProperties {
 
         public static class RateLimiting {
 
-            private boolean enabled = ConfigDefaults.Gateway.RateLimiting.enabled;
+            private boolean enabled = SystemDefaults.Gateway.RateLimiting.enabled;
 
-            private long limit = ConfigDefaults.Gateway.RateLimiting.limit;
+            private long limit = SystemDefaults.Gateway.RateLimiting.limit;
 
-            private int durationInSeconds = ConfigDefaults.Gateway.RateLimiting.durationInSeconds;
+            private int durationInSeconds = SystemDefaults.Gateway.RateLimiting.durationInSeconds;
 
             public boolean isEnabled() {
                 return enabled;
@@ -1134,7 +1134,7 @@ public class ConfigProperties {
 
     public static class Registry {
 
-        private String password = ConfigDefaults.Registry.password;
+        private String password = SystemDefaults.Registry.password;
 
         public String getPassword() {
             return password;
@@ -1147,7 +1147,7 @@ public class ConfigProperties {
 
     public static class ClientApp {
 
-        private String name = ConfigDefaults.ClientApp.name;
+        private String name = SystemDefaults.ClientApp.name;
 
         public String getName() {
             return name;
@@ -1159,7 +1159,7 @@ public class ConfigProperties {
     }
 
     public static class AuditEvents {
-        private int retentionPeriod = ConfigDefaults.AuditEvents.retentionPeriod;
+        private int retentionPeriod = SystemDefaults.AuditEvents.retentionPeriod;
 
         public int getRetentionPeriod() {
             return retentionPeriod;

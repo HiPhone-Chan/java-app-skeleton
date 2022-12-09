@@ -19,8 +19,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import com.chf.commons.management.SecurityMetersService;
-import com.chf.framework.config.ConfigProperties;
-import com.chf.framework.config.ConfigProperties.Security.Authentication.Jwt;
+import com.chf.framework.config.SystemProperties;
+import com.chf.framework.config.SystemProperties.Security.Authentication.Jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -53,9 +53,9 @@ public class TokenProvider {
 
     private final SecurityMetersService securityMetersService;
 
-    public TokenProvider(ConfigProperties configProperties, SecurityMetersService securityMetersService) {
+    public TokenProvider(SystemProperties systemProperties, SecurityMetersService securityMetersService) {
         byte[] keyBytes;
-        Jwt jwt = configProperties.getSecurity().getAuthentication().getJwt();
+        Jwt jwt = systemProperties.getSecurity().getAuthentication().getJwt();
         String secret = jwt.getBase64Secret();
         if (StringUtils.isEmpty(secret)) {
             secret = jwt.getSecret();

@@ -19,14 +19,14 @@ import com.chf.commons.constants.AuthoritiesConstants;
 import com.chf.commons.security.jwt.JWTConfigurer;
 import com.chf.commons.security.jwt.TokenProvider;
 import com.chf.commons.web.filter.OperationLogFilter;
-import com.chf.framework.config.ConfigProperties;
+import com.chf.framework.config.SystemProperties;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration {
 
-    private final ConfigProperties configProperties;
+    private final SystemProperties systemProperties;
 
     private final TokenProvider tokenProvider;
 
@@ -36,13 +36,13 @@ public class SecurityConfiguration {
 
     private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter, ConfigProperties configProperties,
+    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter, SystemProperties systemProperties,
             SecurityProblemSupport problemSupport, OperationLogFilter operationLogFilter) {
         super();
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
         this.operationLogFilter = operationLogFilter;
-        this.configProperties = configProperties;
+        this.systemProperties = systemProperties;
         this.problemSupport = problemSupport;
     }
 
@@ -60,7 +60,7 @@ public class SecurityConfiguration {
                 .exceptionHandling().authenticationEntryPoint(problemSupport).accessDeniedHandler(problemSupport)
                 .and()
                 .headers()
-                .contentSecurityPolicy(configProperties.getSecurity().getContentSecurityPolicy())
+                .contentSecurityPolicy(systemProperties.getSecurity().getContentSecurityPolicy())
                 .and()
                 .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
                 .and()

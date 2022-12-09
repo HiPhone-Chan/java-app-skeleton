@@ -23,7 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public interface ConfigDefaults {
+public interface SystemDefaults {
 
     interface Async {
 
@@ -177,7 +177,7 @@ public interface ConfigDefaults {
             boolean enabled = false;
             String host = "localhost";
             int port = 5000;
-            int queueSize = 512;
+            int ringBufferSize = 512;
         }
     }
 

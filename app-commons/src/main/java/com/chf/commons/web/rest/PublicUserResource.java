@@ -31,7 +31,7 @@ public class PublicUserResource {
 
     private final Logger log = LoggerFactory.getLogger(PublicUserResource.class);
 
-    @Value("${config.clientApp.name}")
+    @Value("${sys.clientApp.name}")
     private String applicationName;
 
     private final UserService userService;

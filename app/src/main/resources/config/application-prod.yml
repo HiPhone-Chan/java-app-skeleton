@@ -38,7 +38,7 @@ server:
     mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
     min-response-size: 1024
     
-config:
+sys:
   http:
     cache: # Used by the CachingHttpHeadersFilter
       timeToLiveInDays: 1461

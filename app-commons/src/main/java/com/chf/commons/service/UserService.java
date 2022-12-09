@@ -129,10 +129,6 @@ public class UserService {
 
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
-            if (isUserInRole(user, AuthoritiesConstants.ADMIN)) {
-                log.warn("Cannot delete admin user: {}", user);
-                return;
-            }
             userRepository.delete(user);
             this.clearUserCaches(user);
             log.debug("Deleted User: {}", user);
@@ -163,7 +159,6 @@ public class UserService {
             }
             String encryptedPassword = passwordEncoder.encode(newPassword);
             user.setPassword(encryptedPassword);
-
             this.clearUserCaches(user);
             log.debug("Changed password for User: {}", user);
         });
@@ -197,10 +192,6 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
-    }
-
-    public static boolean isUserInRole(User user, String hasAuthority) {
-        return user.getAuthorities().stream().anyMatch(authority -> authority.getName().equals(hasAuthority));
     }
 
     @Scheduled(cron = "0 0 1 * * ?")

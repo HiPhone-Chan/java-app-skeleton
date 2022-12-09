@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistra
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.chf.framework.config.ConfigProperties;
+import com.chf.framework.config.SystemProperties;
 import com.chf.framework.config.ProfileConstants;
 
 @Configuration
@@ -21,10 +21,10 @@ public class StaticResourcesWebConfiguration implements WebMvcConfigurer {
     protected static final String[] RESOURCE_PATHS = new String[] { "/*.js", "/*.css", "/*.svg", "/*.png", "*.ico",
             "/content/**", "/i18n/*" };
 
-    private final ConfigProperties configProperties;
+    private final SystemProperties systemProperties;
 
-    public StaticResourcesWebConfiguration(ConfigProperties configProperties) {
-        this.configProperties = configProperties;
+    public StaticResourcesWebConfiguration(SystemProperties systemProperties) {
+        this.systemProperties = systemProperties;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class StaticResourcesWebConfiguration implements WebMvcConfigurer {
     }
 
     private int getHttpCacheProperty() {
-        return configProperties.getHttp().getCache().getTimeToLiveInDays();
+        return systemProperties.getHttp().getCache().getTimeToLiveInDays();
     }
 
 }

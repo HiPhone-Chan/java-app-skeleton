@@ -3,7 +3,7 @@ package com.chf.framework.config.apidoc.customizer;
 import org.springdoc.core.customizers.OpenApiCustomiser;
 import org.springframework.core.Ordered;
 
-import com.chf.framework.config.ConfigProperties;
+import com.chf.framework.config.SystemProperties;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -20,14 +20,14 @@ public class MyOpenApiCustomizer implements OpenApiCustomiser, Ordered {
 
     private int order = DEFAULT_ORDER;
 
-    private final ConfigProperties.ApiDocs properties;
+    private final SystemProperties.ApiDocs properties;
 
     /**
      * <p>Constructor for JHipsterOpenApiCustomizer.</p>
      *
      * @param properties a {@link JHipsterProperties.ApiDocs} object.
      */
-    public MyOpenApiCustomizer(ConfigProperties.ApiDocs properties) {
+    public MyOpenApiCustomizer(SystemProperties.ApiDocs properties) {
         this.properties = properties;
     }
 
@@ -41,7 +41,7 @@ public class MyOpenApiCustomizer implements OpenApiCustomiser, Ordered {
                 .version(properties.getVersion()).termsOfService(properties.getTermsOfServiceUrl())
                 .license(new License().name(properties.getLicense()).url(properties.getLicenseUrl())));
 
-        for (ConfigProperties.ApiDocs.Server server : properties.getServers()) {
+        for (SystemProperties.ApiDocs.Server server : properties.getServers()) {
             openAPI.addServersItem(new Server().url(server.getUrl()).description(server.getDescription()));
         }
     }

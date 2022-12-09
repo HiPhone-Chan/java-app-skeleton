@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 
-import com.chf.framework.config.ConfigProperties;
+import com.chf.framework.config.SystemProperties;
 
 import io.swagger.v3.oas.models.OpenAPI;
 
@@ -20,7 +20,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 @ConditionalOnClass(OpenAPI.class)
 @Profile(SPRING_PROFILE_API_DOCS)
 @AutoConfigureBefore(SpringDocConfiguration.class)
-@AutoConfigureAfter(ConfigProperties.class)
+@AutoConfigureAfter(SystemProperties.class)
 @Import(SpringDocGroupsConfiguration.class)
 public class SpringDocAutoConfiguration {
 
