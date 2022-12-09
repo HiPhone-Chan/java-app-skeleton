@@ -13,15 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
 
-import com.chf.framework.config.ConfigProperties;
 import com.chf.framework.config.ProfileConstants;
 import com.chf.framework.config.ProfileUtil;
+import com.chf.framework.config.logging.CRLFLogConverter;
 
 @SpringBootApplication
-@EnableConfigurationProperties({ ConfigProperties.class })
 public class Application {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -67,7 +65,7 @@ public class Application {
         } catch (UnknownHostException e) {
             log.warn("The host name could not be determined, using `localhost` as fallback");
         }
-        log.info(
+        log.info(CRLFLogConverter.CRLF_SAFE_MARKER,
                 "\n----------------------------------------------------------\n\t"
                         + "Application '{}' is running! Access URLs:\n\t" + "Local: \t\t{}://localhost:{}{}\n\t"
                         + "External: \t{}://{}:{}{}\n\t"

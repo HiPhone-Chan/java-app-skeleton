@@ -11,22 +11,22 @@
   <packaging>pom</packaging>
 
   <properties>
-    <spring-boot.version>2.7.2</spring-boot.version>
+    <spring-boot.version>2.7.3</spring-boot.version>
     <springdoc.version>1.6.9</springdoc.version>
     <problem-spring.version>0.27.0</problem-spring.version>
     <jjwt.version>0.11.5</jjwt.version>
     <commons-fileupload.version>1.4</commons-fileupload.version>
+    <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
     <mapstruct.version>1.5.2.Final</mapstruct.version>
-    <testcontainers.version>1.17.3</testcontainers.version>
+    <testcontainers.version>1.17.6</testcontainers.version>
     <!-- Plugin versions -->
-    <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
-    <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
+    <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
+    <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
     <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
-    <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
-    <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
-    <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-    <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
-    <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
+    <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
+    <maven-resources-plugin.version>3.3.0</maven-resources-plugin.version>
+    <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+    <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
     <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
     <openapi-generator-maven-plugin.version>5.4.0</openapi-generator-maven-plugin.version>
   </properties>
@@ -89,6 +89,27 @@
         <artifactId>jjwt-jackson</artifactId>
         <version>${jjwt.version}</version>
         <scope>runtime</scope>
+      </dependency>
+
+      <!-- log -->
+      <dependency>
+        <groupId>net.logstash.logback</groupId>
+        <artifactId>logstash-logback-encoder</artifactId>
+        <version>${logstash-logback-encoder.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-access</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <!-- commons -->

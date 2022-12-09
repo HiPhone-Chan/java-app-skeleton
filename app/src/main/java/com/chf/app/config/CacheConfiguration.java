@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import com.chf.commons.domain.Authority;
 import com.chf.commons.domain.User;
 import com.chf.commons.repository.UserRepository;
-import com.chf.framework.config.ConfigProperties;
+import com.chf.framework.config.SystemProperties;
 
 @Configuration
 @EnableCaching
@@ -24,8 +24,8 @@ public class CacheConfiguration {
 
     private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
 
-    public CacheConfiguration(ConfigProperties jHipsterProperties) {
-        ConfigProperties.Cache.Ehcache ehcache = jHipsterProperties.getCache().getEhcache();
+    public CacheConfiguration(SystemProperties jHipsterProperties) {
+        SystemProperties.Cache.Ehcache ehcache = jHipsterProperties.getCache().getEhcache();
 
         jcacheConfiguration = Eh107Configuration.fromEhcacheCacheConfiguration(CacheConfigurationBuilder
                 .newCacheConfigurationBuilder(Object.class, Object.class,

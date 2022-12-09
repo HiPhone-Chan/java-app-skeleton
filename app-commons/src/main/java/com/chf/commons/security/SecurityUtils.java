@@ -1,5 +1,6 @@
 package com.chf.commons.security;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -62,22 +63,37 @@ public final class SecurityUtils {
     }
 
     /**
-     * If the current user has a specific authority (security role).
+     * Checks if the current user has any of the authorities.
      *
-     * <p>
-     * The name of this method comes from the isUserInRole() method in the Servlet
-     * API
-     * </p>
+     * @param authorities the authorities to check.
+     * @return true if the current user has any of the authorities, false otherwise.
+     */
+    public static boolean hasCurrentUserAnyOfAuthorities(String... authorities) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        return Optional.ofNullable(securityContext.getAuthentication())
+                .map(authentication -> getAuthorities(authentication)
+                        .anyMatch(authority -> Arrays.asList(authorities).contains(authority)))
+                .orElse(false);
+    }
+
+    /**
+     * Checks if the current user has none of the authorities.
      *
-     * @param authority the authority to check
-     * @return true if the current user has the authority, false otherwise
+     * @param authorities the authorities to check.
+     * @return true if the current user has none of the authorities, false otherwise.
+     */
+    public static boolean hasCurrentUserNoneOfAuthorities(String... authorities) {
+        return !hasCurrentUserAnyOfAuthorities(authorities);
+    }
+
+    /**
+     * Checks if the current user has a specific authority.
+     *
+     * @param authority the authority to check.
+     * @return true if the current user has the authority, false otherwise.
      */
     public static boolean hasCurrentUserThisAuthority(String authority) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        return Optional
-                .ofNullable(securityContext.getAuthentication())
-                .map(authentication -> getAuthorities(authentication).anyMatch(authority::equals))
-                .orElse(false);
+        return hasCurrentUserAnyOfAuthorities(authority);
     }
 
     private static Stream<String> getAuthorities(Authentication authentication) {

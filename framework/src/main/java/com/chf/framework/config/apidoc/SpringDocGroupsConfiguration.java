@@ -26,7 +26,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.chf.framework.config.ConfigProperties;
+import com.chf.framework.config.SystemProperties;
 import com.chf.framework.config.apidoc.customizer.MyOpenApiCustomizer;
 
 import io.swagger.v3.oas.models.info.Info;
@@ -45,15 +45,15 @@ public class SpringDocGroupsConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(SpringDocGroupsConfiguration.class);
 
-    private final ConfigProperties.ApiDocs properties;
+    private final SystemProperties.ApiDocs properties;
 
     /**
      * <p>Constructor for OpenApiAutoConfiguration.</p>
      *
      * @param jHipsterProperties a {@link JHipsterProperties} object.
      */
-    public SpringDocGroupsConfiguration(ConfigProperties configProperties) {
-        this.properties = configProperties.getApiDocs();
+    public SpringDocGroupsConfiguration(SystemProperties systemProperties) {
+        this.properties = systemProperties.getApiDocs();
     }
 
     /**

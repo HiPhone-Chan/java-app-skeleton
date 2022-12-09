@@ -29,7 +29,7 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 
 import com.chf.commons.repository.OperationLogRepository;
 import com.chf.commons.web.filter.OperationLogFilter;
-import com.chf.framework.config.ConfigProperties;
+import com.chf.framework.config.SystemProperties;
 import com.chf.framework.config.ProfileConstants;
 import com.chf.framework.config.h2.H2ConfigurationHelper;
 import com.chf.framework.web.support.PutAwareCommonsMultipartResolver;
@@ -41,14 +41,14 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
     private final Environment env;
 
-    private final ConfigProperties configProperties;
+    private final SystemProperties systemProperties;
 
     private OperationLogRepository operationLogRepository;
 
-    public WebConfigurer(Environment env, ConfigProperties configProperties,
+    public WebConfigurer(Environment env, SystemProperties systemProperties,
             OperationLogRepository operationLogRepository) {
         this.env = env;
-        this.configProperties = configProperties;
+        this.systemProperties = systemProperties;
         this.operationLogRepository = operationLogRepository;
     }
 
@@ -106,7 +106,7 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = configProperties.getCors();
+        CorsConfiguration config = systemProperties.getCors();
         if (!CollectionUtils.isEmpty(config.getAllowedOrigins())
                 || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
             log.debug("Registering CORS filter");
