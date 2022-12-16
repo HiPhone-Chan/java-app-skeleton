@@ -35,7 +35,7 @@ import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 
-import com.chf.app.config.SystemConstants;
+import com.chf.app.config.AppConstants;
 import com.chf.commons.exceptioin.ServiceException;
 import com.chf.commons.web.errors.ErrorConstants;
 import com.chf.commons.web.errors.ErrorVM;
@@ -154,6 +154,6 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     private boolean containsPackageName(String message) {
         // This list is for sure not complete
         return StringUtils.containsAny(message, "org.", "java.", "net.", "javax.", "com.", "io.", "de.",
-                SystemConstants.BASE_PACKAGE);
+                AppConstants.BASE_PACKAGE);
     }
 }

@@ -19,27 +19,26 @@ class TechnicalStructureTest {
     // @formatter:off
     @ArchTest
     static final ArchRule respectsTechnicalArchitectureLayers = layeredArchitecture()
-        .layer("Aop").definedBy("..aop..")
         .layer("Config").definedBy("..config..")
         .layer("Web").definedBy("..web..")
         .optionalLayer("Service").definedBy("..service..")
         .layer("Security").definedBy("..security..")
         .layer("Persistence").definedBy("..repository..")
         .layer("Domain").definedBy("..domain..")
-    
+
         .whereLayer("Config").mayNotBeAccessedByAnyLayer()
-        .whereLayer("Aop").mayNotBeAccessedByAnyLayer()
         .whereLayer("Web").mayOnlyBeAccessedByLayers("Config")
-        .whereLayer("Service").mayOnlyBeAccessedByLayers("Web", "Config", "Aop")
+        .whereLayer("Service").mayOnlyBeAccessedByLayers("Web", "Config")
         .whereLayer("Security").mayOnlyBeAccessedByLayers("Config", "Service", "Web")
-        .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Service", "Security", "Web", "Config", "Aop")
-        .whereLayer("Domain").mayOnlyBeAccessedByLayers("Persistence", "Service", "Security", "Web", "Config", "Aop")
-    
+        .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Service", "Security", "Web", "Config")
+        .whereLayer("Domain").mayOnlyBeAccessedByLayers("Persistence", "Service", "Security", "Web", "Config")
+
         .ignoreDependency(belongToAnyOf(Application.class), alwaysTrue())
         .ignoreDependency(alwaysTrue(), belongToAnyOf(
             CommonsConstants.class,
             ErrorCodeContants.class,
             AuthoritiesConstants.class
-        ));
+        ))
+        ;
     // @formatter:on
 }

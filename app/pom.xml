@@ -85,12 +85,6 @@
       <artifactId>mysql-connector-java</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>test</scope>
-    </dependency>
-
     <!-- apache commons -->
     <dependency>
       <groupId>org.apache.commons</groupId>

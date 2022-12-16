@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.chf.framework.config.SystemProperties;
 import com.chf.framework.config.ProfileConstants;
+import com.chf.framework.config.SystemProperties;
 import com.chf.framework.config.apidoc.customizer.MyOpenApiCustomizer;
 
 @Configuration
@@ -20,7 +20,7 @@ public class OpenApiConfiguration {
             SystemProperties systemProperties) {
         SystemProperties.ApiDocs properties = systemProperties.getApiDocs();
         return GroupedOpenApi.builder().group("openapi").addOpenApiCustomiser(openApiCustomizer)
-                .packagesToScan(SystemConstants.BASE_PACKAGE).pathsToMatch(properties.getDefaultIncludePattern())
+                .packagesToScan(AppConstants.BASE_PACKAGE).pathsToMatch(properties.getDefaultIncludePattern())
                 .build();
     }
 }

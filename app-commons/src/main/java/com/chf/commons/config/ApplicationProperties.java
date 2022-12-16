@@ -1,4 +1,4 @@
-package com.chf.app.config;
+package com.chf.commons.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
