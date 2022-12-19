@@ -5,7 +5,7 @@
 	<include
 		resource="org/springframework/boot/logging/logback/base.xml" />
 
-	<logger name="com.chf.app" level="INFO"/>
+	<logger name="tech.hiphone.app" level="INFO"/>
 
     <logger name="tech.jhipster" level="WARN"/>
 

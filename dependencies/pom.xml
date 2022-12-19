@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.chf</groupId>
+    <groupId>tech.hiphone</groupId>
     <artifactId>app-skeleton</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
@@ -11,37 +11,20 @@
   <packaging>pom</packaging>
 
   <properties>
-    <spring-boot.version>2.7.3</spring-boot.version>
-    <springdoc.version>1.6.9</springdoc.version>
+    <springdoc.version>1.6.14</springdoc.version>
     <problem-spring.version>0.27.0</problem-spring.version>
     <jjwt.version>0.11.5</jjwt.version>
     <commons-fileupload.version>1.4</commons-fileupload.version>
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
     <mapstruct.version>1.5.2.Final</mapstruct.version>
     <testcontainers.version>1.17.6</testcontainers.version>
-    <!-- Plugin versions -->
-    <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
-    <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-    <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
-    <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
-    <maven-resources-plugin.version>3.3.0</maven-resources-plugin.version>
-    <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-    <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
-    <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
-    <openapi-generator-maven-plugin.version>5.4.0</openapi-generator-maven-plugin.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.chf</groupId>
+        <groupId>tech.hiphone</groupId>
         <artifactId>framework</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.chf</groupId>
-        <artifactId>app-commons</artifactId>
         <version>0.0.1-SNAPSHOT</version>
       </dependency>
 
@@ -132,6 +115,7 @@
         <version>${mapstruct.version}</version>
       </dependency>
 
+      <!-- BOM imports last so we (could) selectively override dependencies above -->
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>testcontainers-bom</artifactId>

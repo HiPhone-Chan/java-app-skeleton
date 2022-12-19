@@ -1,22 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.chf</groupId>
+    <groupId>tech.hiphone</groupId>
     <artifactId>app-skeleton</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>app-commons</artifactId>
 
   <properties>
-    <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-    <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
-    <archunit-junit5.version>0.22.0</archunit-junit5.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.chf</groupId>
+        <groupId>tech.hiphone</groupId>
         <artifactId>dependencies</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <type>pom</type>
@@ -27,7 +24,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.chf</groupId>
+      <groupId>tech.hiphone</groupId>
       <artifactId>framework</artifactId>
     </dependency>
 
@@ -153,6 +150,7 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-cache</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>

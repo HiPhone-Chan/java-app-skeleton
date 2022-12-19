@@ -2,7 +2,7 @@ logging:
   level:
     ROOT: DEBUG
     "[org.hibernate.SQL]": DEBUG
-    "[com.chf.app]": DEBUG    
+    "[tech.hiphone.app]": DEBUG    
     
 spring:
   devtools:
@@ -47,7 +47,7 @@ sys:
       time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
       max-entries: 100 # Number of objects in each cache entry
   cors:
-    allowed-origin-patterns: 'http://localhost:[*]'
+    allowed-origin-patterns: '*'
     allowed-methods: '*'
     allowed-headers: '*'
     exposed-headers: 'Authorization,Link,X-Total-Count'

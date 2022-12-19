@@ -1,33 +1,39 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.chf</groupId>
-    <artifactId>dependencies</artifactId>
+    <groupId>tech.hiphone</groupId>
+    <artifactId>app-skeleton</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../dependencies/pom.xml</relativePath>
   </parent>
   <artifactId>app</artifactId>
 
   <properties>
-    <archunit-junit5.version>0.22.0</archunit-junit5.version>
-    <base-package>com.chf.app</base-package>
+    <base-package>tech.hiphone.app</base-package>
     <start-class>${base-package}.Application</start-class>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>tech.hiphone</groupId>
+        <artifactId>dependencies</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
     <dependency>
-      <groupId>com.chf</groupId>
+      <groupId>tech.hiphone</groupId>
       <artifactId>framework</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>com.chf</groupId>
+      <groupId>tech.hiphone</groupId>
       <artifactId>app-commons</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -61,7 +67,6 @@
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
-      <optional>true</optional>
     </dependency>
 
     <dependency>
