@@ -10,6 +10,7 @@
     <module>dependencies</module>
     <module>app-commons</module>
     <module>admin-page</module>
+    <module>rbac</module>
   </modules>
 
   <properties>

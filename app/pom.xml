@@ -37,7 +37,7 @@
     </dependency>
 
     <dependency>
-      <groupId>com.chf</groupId>
+      <groupId>tech.hiphone</groupId>
       <artifactId>admin-page</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>

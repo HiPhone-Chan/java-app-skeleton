@@ -1,0 +1,14 @@
+@startuml
+' 通过role控制页面导航的显示
+' 通过api控制页面内容的显示
+
+
+Staff |o--|{ StaffRole
+Staff }|--o| Organization
+Organization }|--|| Organization
+Navigation }|--|| Navigation
+Navigation }|--|{ StaffRole
+Navigation }|--|{ ApiInfo
+StaffRole }|--|{ ApiInfo
+
+@enduml

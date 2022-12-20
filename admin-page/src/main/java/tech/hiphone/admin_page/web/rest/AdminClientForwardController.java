@@ -1,4 +1,4 @@
-package com.chf.admin_page.web.rest;
+package tech.hiphone.admin_page.web.rest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
