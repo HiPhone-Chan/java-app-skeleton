@@ -5,6 +5,13 @@
 ```
 nodejs
 
-git submodule update
+git submodule update --init --recursive
 
+```
+
+# update branch
+```
+cd admin-page/src/main/webapp
+git checkout backend
+git pull
 ```
