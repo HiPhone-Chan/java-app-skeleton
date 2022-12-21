@@ -1,4 +1,4 @@
-package tech.hiphone.framework.uttils;
+package tech.hiphone.commons.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

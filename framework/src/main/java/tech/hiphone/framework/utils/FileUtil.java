@@ -1,4 +1,4 @@
-package tech.hiphone.framework.uttils;
+package tech.hiphone.framework.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

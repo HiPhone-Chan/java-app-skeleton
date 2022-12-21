@@ -3,7 +3,7 @@ package tech.hiphone.commons.web.vm;
 import java.util.Optional;
 
 import tech.hiphone.commons.domain.OperationLog;
-import tech.hiphone.framework.uttils.JsonUtil;
+import tech.hiphone.commons.utils.JsonUtil;
 
 public class OperationLogVM {
 
