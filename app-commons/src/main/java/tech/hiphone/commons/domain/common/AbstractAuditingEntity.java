@@ -1,4 +1,4 @@
-package tech.hiphone.commons.domain;
+package tech.hiphone.commons.domain.common;
 
 import java.io.Serializable;
 import java.time.Instant;

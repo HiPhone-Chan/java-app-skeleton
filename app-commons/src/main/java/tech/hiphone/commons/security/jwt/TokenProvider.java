@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -18,12 +20,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import tech.hiphone.commons.management.SecurityMetersService;
-import tech.hiphone.framework.config.SystemProperties;
-import tech.hiphone.framework.config.SystemProperties.Security.Authentication.Jwt;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -31,6 +30,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import tech.hiphone.commons.management.SecurityMetersService;
+import tech.hiphone.framework.config.SystemProperties;
+import tech.hiphone.framework.config.SystemProperties.Security.Authentication.Jwt;
 
 @Component
 public class TokenProvider {
@@ -90,6 +92,28 @@ public class TokenProvider {
                 .signWith(key, SignatureAlgorithm.HS512).setExpiration(validity).compact();
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public String createToken(Authentication authentication, long expirationMill) {
+        String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(AUTHORITIES_DELIMITER));
+
+        long now = (new Date()).getTime();
+        Date validity = new Date(now + expirationMill);
+
+        Map<String, Object> claimsMap = new HashMap<>();
+        Object details = authentication.getDetails();
+        if (details instanceof Map) {
+            claimsMap.putAll((Map) details);
+        }
+        claimsMap.put(AUTHORITIES_KEY, authorities);
+
+        JwtBuilder jwtBuilder = Jwts.builder().setSubject(authentication.getName());
+        claimsMap.forEach((key, value) -> {
+            jwtBuilder.claim(key, value);
+        });
+        return jwtBuilder.signWith(key, SignatureAlgorithm.HS512).setExpiration(validity).compact();
+    }
+
     public Authentication getAuthentication(String token) {
         Claims claims = jwtParser.parseClaimsJws(token).getBody();
 
@@ -99,7 +123,16 @@ public class TokenProvider {
 
         User principal = new User(claims.getSubject(), "", authorities);
 
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+        claims.remove(AUTHORITIES_KEY);
+        Map<String, Object> details = new HashMap<>();
+        claims.forEach((key, value) -> {
+            details.put(key, value);
+        });
+
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, token,
+                authorities);
+        authentication.setDetails(details);
+        return authentication;
     }
 
     public boolean validateToken(String authToken) {

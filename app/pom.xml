@@ -39,7 +39,13 @@
     <dependency>
       <groupId>tech.hiphone</groupId>
       <artifactId>admin-page</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.0.1</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>tech.hiphone</groupId>
+      <artifactId>rbac</artifactId>
+      <version>0.0.1</version>
     </dependency>
 
     <dependency>

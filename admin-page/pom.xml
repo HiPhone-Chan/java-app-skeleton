@@ -3,7 +3,7 @@
   <parent>
     <groupId>tech.hiphone</groupId>
     <artifactId>app-skeleton</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
   </parent>
   <artifactId>admin-page</artifactId>
 
@@ -20,7 +20,7 @@
       <dependency>
         <groupId>tech.hiphone</groupId>
         <artifactId>dependencies</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

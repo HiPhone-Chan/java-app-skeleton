@@ -11,6 +11,8 @@
     <module>app-commons</module>
     <module>admin-page</module>
     <module>rbac</module>
+    <module>weixin</module>
+    <module>cms</module>
   </modules>
 
   <properties>

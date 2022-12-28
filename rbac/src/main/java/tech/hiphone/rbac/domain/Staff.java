@@ -33,7 +33,7 @@ public class Staff {
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "rbac_staff_role", joinColumns = {
-            @JoinColumn(name = "staff_id", referencedColumnName = "staff_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "staff_id", referencedColumnName = "id") }, inverseJoinColumns = {
                     @JoinColumn(name = "role_id", referencedColumnName = "id") })
     @BatchSize(size = 20)
     private Set<Role> roles = new HashSet<>();

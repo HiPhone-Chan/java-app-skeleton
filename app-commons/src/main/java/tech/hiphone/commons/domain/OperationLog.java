@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+import tech.hiphone.commons.domain.common.AbstractAuditingEntity;
+
 //操作日志
 @Entity
 @Table(name = "app_commons_operation_log")
