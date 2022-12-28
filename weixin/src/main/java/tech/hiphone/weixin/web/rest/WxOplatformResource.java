@@ -8,7 +8,6 @@ import javax.persistence.criteria.Predicate;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -31,8 +30,11 @@ import tech.hiphone.weixin.repository.WxOplatformRepository;
 @RestController
 public class WxOplatformResource {
 
-    @Autowired
-    private WxOplatformRepository wxOplatformRepository;
+    private final WxOplatformRepository wxOplatformRepository;
+
+    public WxOplatformResource(WxOplatformRepository wxOplatformRepository) {
+        this.wxOplatformRepository = wxOplatformRepository;
+    }
 
     @PostMapping("/api/wx/oplatform")
     @Secured({ AuthoritiesConstants.ADMIN })

@@ -1,5 +1,7 @@
 package tech.hiphone.weixin.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -11,9 +13,7 @@ import tech.hiphone.weixin.domain.id.WxUserId;
 
 public interface WxUserRepository extends JpaRepository<WxUser, WxUserId> {
 
-    WxUser findTopOneByUnionId(String unionId);
-
-    WxUser findOneByUserAndKeyType(User user, String type);
+    Optional<WxUser> findTopOneByUnionId(String unionId);
 
     void deleteByUser(User user);
 

@@ -9,7 +9,6 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
@@ -53,11 +52,11 @@ public class WeixinService implements ApplicationListener<WxEvent> {
 
     private WeixinApiHandler weixinApiHandler;
 
-    @Autowired
-    private WeixinProperties weixinProperties;
+    private final WeixinProperties weixinProperties;
 
-    public WeixinService(RestTemplate restTemplate) {
+    public WeixinService(RestTemplate restTemplate, WeixinProperties weixinProperties) {
         weixinApiHandler = new WeixinApiHandler(restTemplate);
+        this.weixinProperties = weixinProperties;
     }
 
     public Map<String, Object> getInfoFromCode(WeixinAuthenticationToken authentication) {

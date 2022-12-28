@@ -8,7 +8,6 @@ import javax.persistence.criteria.Predicate;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -31,8 +30,11 @@ import tech.hiphone.weixin.repository.WxPayRepository;
 @RestController
 public class WxPayResource {
 
-    @Autowired
-    private WxPayRepository wxPayRepository;
+    private final WxPayRepository wxPayRepository;
+
+    public WxPayResource(WxPayRepository wxPayRepository) {
+        this.wxPayRepository = wxPayRepository;
+    }
 
     @PostMapping("/api/wx/pay")
     @Secured({ AuthoritiesConstants.ADMIN })

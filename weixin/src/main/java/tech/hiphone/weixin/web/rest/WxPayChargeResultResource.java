@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.criteria.Predicate;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,8 +22,11 @@ import tech.hiphone.weixin.web.vm.WxPayChargeResultVM;
 @RestController
 public class WxPayChargeResultResource {
 
-    @Autowired
-    private WxPayChargeResultRepository wxPayChargeResultRepository;
+    private final WxPayChargeResultRepository wxPayChargeResultRepository;
+
+    public WxPayChargeResultResource(WxPayChargeResultRepository wxPayChargeResultRepository) {
+        this.wxPayChargeResultRepository = wxPayChargeResultRepository;
+    }
 
     @GetMapping("/api/wx/pay/charge/results")
     @Secured({ AuthoritiesConstants.MANAGER })

@@ -8,7 +8,6 @@ import javax.persistence.criteria.Predicate;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -31,8 +30,11 @@ import tech.hiphone.weixin.repository.WxOffiaccountRepository;
 @RestController
 public class WxOffiaccountResource {
 
-    @Autowired
-    private WxOffiaccountRepository wxOffiaccountRepository;
+    private final WxOffiaccountRepository wxOffiaccountRepository;
+
+    public WxOffiaccountResource(WxOffiaccountRepository wxOffiaccountRepository) {
+        this.wxOffiaccountRepository = wxOffiaccountRepository;
+    }
 
     @PostMapping("/api/wx/offiaccount")
     @Secured({ AuthoritiesConstants.ADMIN })

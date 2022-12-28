@@ -30,11 +30,11 @@ public class WxUserService {
 
     private static final Logger log = LoggerFactory.getLogger(WxUserService.class);
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private WxUserRepository wxUserRepository;
+    private final WxUserRepository wxUserRepository;
 
-    private UserService userService;
+    private final UserService userService;
 
     public WxUserService(UserRepository userRepository, WxUserRepository wxUserRepository, UserService userService) {
         super();
@@ -111,13 +111,10 @@ public class WxUserService {
                 wxUser.setUnionId(unionId);
             }
 
-            User user = wxUser.getUser();
-            if (user == null) {
-                WxUser unionWxUser = wxUserRepository.findTopOneByUnionId(unionId);
-                if (unionWxUser != null) {
-                    user = unionWxUser.getUser();
-                    wxUser.setUser(user);
-                }
+            if (wxUser.getUser() == null) {
+                wxUserRepository.findTopOneByUnionId(unionId).ifPresent(unionWxUser -> {
+                    wxUser.setUser(unionWxUser.getUser());
+                });
             }
         }
 

@@ -33,8 +33,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import tech.hiphone.commons.constants.ErrorCodeContants;
 import tech.hiphone.commons.constants.CommonsConstants;
+import tech.hiphone.commons.constants.ErrorCodeContants;
 import tech.hiphone.commons.domain.Authority;
 import tech.hiphone.commons.domain.User;
 import tech.hiphone.commons.exceptioin.ServiceException;
@@ -42,7 +42,6 @@ import tech.hiphone.commons.repository.UserRepository;
 import tech.hiphone.commons.service.UserService;
 import tech.hiphone.commons.service.dto.AdminUserDTO;
 import tech.hiphone.commons.service.dto.PasswordChangeDTO;
-import tech.hiphone.commons.service.dto.UserDTO;
 import tech.hiphone.framework.web.util.ResponseUtil;
 
 @RestController
@@ -136,9 +135,9 @@ public class UserResource {
     }
 
     @GetMapping("/user/{login:" + CommonsConstants.LOGIN_REGEX + "}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable @Pattern(regexp = CommonsConstants.LOGIN_REGEX) String login) {
+    public ResponseEntity<AdminUserDTO> getUser(@PathVariable @Pattern(regexp = CommonsConstants.LOGIN_REGEX) String login) {
         log.debug("REST request to get User : {}", login);
-        return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin(login).map(UserDTO::new));
+        return ResponseUtil.wrapOrNotFound(userService.getUserWithAuthoritiesByLogin(login).map(AdminUserDTO::new));
     }
 
     @DeleteMapping("/user/{login:" + CommonsConstants.LOGIN_REGEX + "}")

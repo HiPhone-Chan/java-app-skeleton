@@ -8,7 +8,6 @@ import javax.persistence.criteria.Predicate;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -31,8 +30,11 @@ import tech.hiphone.weixin.repository.WxMiniProgramRepository;
 @RestController
 public class WxMiniProgramResource {
 
-    @Autowired
-    private WxMiniProgramRepository wxMiniProgramRepository;
+    private final WxMiniProgramRepository wxMiniProgramRepository;
+
+    public WxMiniProgramResource(WxMiniProgramRepository wxMiniProgramRepository) {
+        this.wxMiniProgramRepository = wxMiniProgramRepository;
+    }
 
     @PostMapping("/api/wx/mini-program")
     @Secured({ AuthoritiesConstants.ADMIN })
@@ -47,10 +49,9 @@ public class WxMiniProgramResource {
     @PutMapping("/api/wx/mini-program")
     @Secured({ AuthoritiesConstants.ADMIN })
     public void updateWxMiniProgram(@Valid @RequestBody WxMiniProgram wxMiniProgramVM) {
-        WxMiniProgram wxMiniProgram = wxMiniProgramRepository.findById(wxMiniProgramVM.getAppId())
-                .orElseThrow(() -> new ServiceException(ErrorCodeContants.LACK_OF_DATA));
+        WxMiniProgram wxMiniProgram = wxMiniProgramRepository.findById(wxMiniProgramVM.getAppId()).orElseThrow();
         WxMiniProgram newWxMiniProgram = wxMiniProgramVM.clone();
-        newWxMiniProgram.setAppId(wxMiniProgramVM.getAppId());
+
         if (StringUtils.isEmpty(wxMiniProgramVM.getAppSecret())) {
             newWxMiniProgram.setAppSecret(wxMiniProgram.getAppSecret());
         }
