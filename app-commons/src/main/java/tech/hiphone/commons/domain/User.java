@@ -28,6 +28,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import tech.hiphone.commons.constants.CommonsConstants;
+import tech.hiphone.commons.domain.common.AbstractAuditingEntity;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity

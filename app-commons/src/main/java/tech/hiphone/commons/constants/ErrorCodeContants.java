@@ -17,5 +17,11 @@ public interface ErrorCodeContants {
     String METHOD_NOT_SUPPORTED = "METHOD_NOT_SUPPORTED";
     String CONCURRENCY_FAILURE = "CONCURRENCY_FAILURE";
     String OTHER_ERROR = "OTHER_ERROR";
+    
+    String USER_NOT_EXISTS = "USER_NOT_EXISTS";
+    String USER_EXISTS = "USER_EXISTS";
+    String DATA_FORMAT = "DATA_FORMAT";
+    String DECODE_FAIL = "DECODE_FAIL";
+    String DATA_EXISTS = "DATA_EXISTS";
 
 }

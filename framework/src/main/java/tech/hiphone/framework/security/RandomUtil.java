@@ -1,6 +1,7 @@
 package tech.hiphone.framework.security;
 
 import java.security.SecureRandom;
+import java.util.UUID;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -52,5 +53,9 @@ public final class RandomUtil {
      */
     public static String generateResetKey() {
         return generateRandomAlphanumericString();
+    }
+
+    public static String uuid() {
+        return UUID.randomUUID().toString().replace("-", "");
     }
 }

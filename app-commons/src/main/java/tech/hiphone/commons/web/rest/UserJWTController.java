@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tech.hiphone.commons.security.jwt.JWTFilter;
+import tech.hiphone.commons.security.jwt.JWTToken;
 import tech.hiphone.commons.security.jwt.TokenProvider;
 import tech.hiphone.commons.web.vm.LoginVM;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @RestController
 @RequestMapping("/api")
@@ -50,21 +50,4 @@ public class UserJWTController {
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
     }
 
-    static class JWTToken {
-
-        private String idToken;
-
-        JWTToken(String idToken) {
-            this.idToken = idToken;
-        }
-
-        @JsonProperty("id_token")
-        String getIdToken() {
-            return idToken;
-        }
-
-        void setIdToken(String idToken) {
-            this.idToken = idToken;
-        }
-    }
 }
