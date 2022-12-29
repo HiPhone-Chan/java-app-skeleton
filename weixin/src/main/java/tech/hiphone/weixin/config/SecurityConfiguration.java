@@ -9,9 +9,8 @@ import tech.hiphone.weixin.repository.WxUserRepository;
 import tech.hiphone.weixin.security.authentication.SwitchWeixinUserAuthenticationProvider;
 import tech.hiphone.weixin.security.authentication.WeixinAuthenticationProvider;
 import tech.hiphone.weixin.service.WeixinService;
-import tech.hiphone.weixin.service.WxUserService;
 
-//@Configuration("weixinSecurityConfiguration")
+@Configuration("weixinSecurityConfiguration")
 public class SecurityConfiguration {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -20,21 +19,17 @@ public class SecurityConfiguration {
 
     private final WeixinService weixinService;
 
-    private final WxUserService wxUserService;
-
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder,
-            WxUserRepository wxUserRepository, WeixinService weixinService, WxUserService wxUserService) {
+            WxUserRepository wxUserRepository, WeixinService weixinService) {
         super();
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.wxUserRepository = wxUserRepository;
         this.weixinService = weixinService;
-        this.wxUserService = wxUserService;
     }
 
     @PostConstruct
     public void init() {
-        authenticationManagerBuilder
-                .authenticationProvider(new WeixinAuthenticationProvider(weixinService, wxUserService))
+        authenticationManagerBuilder.authenticationProvider(new WeixinAuthenticationProvider(weixinService))
                 .authenticationProvider(new SwitchWeixinUserAuthenticationProvider(wxUserRepository));
     }
 

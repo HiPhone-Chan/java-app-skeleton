@@ -24,9 +24,11 @@ import tech.hiphone.weixin.config.WeixinProperties;
 import tech.hiphone.weixin.config.WeixinProperties.WeixinBaseInfo;
 import tech.hiphone.weixin.constants.MsgType;
 import tech.hiphone.weixin.constants.WeixinConstants;
+import tech.hiphone.weixin.domain.id.WxUserId;
 import tech.hiphone.weixin.event.WxEvent;
 import tech.hiphone.weixin.event.WxMsgEvent;
 import tech.hiphone.weixin.security.authentication.WeixinAuthenticationToken;
+import tech.hiphone.weixin.security.utils.WxSecurityUtils;
 import tech.hiphone.weixin.service.dto.TicketInfoDTO;
 import tech.hiphone.weixin.service.dto.TokenInfoDTO;
 import tech.hiphone.weixin.service.dto.req.CustomMessageReqDTO;
@@ -94,6 +96,11 @@ public class WeixinService implements ApplicationListener<WxEvent> {
         }
 
         return result;
+    }
+
+    public Map<String, Object> getUserInfo() {
+        WxUserId wxUserId = WxSecurityUtils.getCurrentWxUserId().orElseThrow();
+        return weixinApiHandler.getUserInfo(getAccessToken(wxUserId.getAppId()), wxUserId.getOpenId());
     }
 
     // 安全检查

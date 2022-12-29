@@ -1,7 +1,6 @@
 package tech.hiphone.weixin.service;
 
-import java.time.Instant;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -13,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +23,6 @@ import tech.hiphone.commons.domain.User;
 import tech.hiphone.commons.exceptioin.ServiceException;
 import tech.hiphone.commons.repository.AuthorityRepository;
 import tech.hiphone.commons.repository.UserRepository;
-import tech.hiphone.commons.service.dto.AdminUserDTO;
 import tech.hiphone.framework.security.RandomUtil;
 import tech.hiphone.weixin.domain.WxUser;
 import tech.hiphone.weixin.domain.id.WxUserId;
@@ -51,10 +48,6 @@ public class WxUserService {
         this.wxUserRepository = wxUserRepository;
         this.authorityRepository = authorityRepository;
     }
-
-//    public Map<String, Object> getUserInfo(String appId) {
-//        return weixinApiHandler.getUserInfo(getAccessToken(appId), wxUser.getId().getOpenId());
-//    }
 
     // 保存微信用户信息
     public WxUser saveWxUser(String appId, Map<String, Object> result) {
@@ -134,44 +127,19 @@ public class WxUserService {
     private static final String LOGIN_PREFIX = "wx";
 
     private User createUser() {
-        Set<String> authoritySet = new HashSet<>();
-        authoritySet.add(AuthoritiesConstants.USER);
-
-        AdminUserDTO userDTO = new AdminUserDTO();
-        userDTO.setLogin(LOGIN_PREFIX + UUID.randomUUID().toString().replaceAll("-", ""));
-        userDTO.setAuthorities(authoritySet);
-        return createUser(userDTO);
-    }
-
-    public User createUser(AdminUserDTO userDTO) {
         User user = new User();
-        String login = userDTO.getLogin().toLowerCase(Locale.ENGLISH);
+        String login = (LOGIN_PREFIX + UUID.randomUUID().toString().replaceAll("-", "")).toLowerCase(Locale.ENGLISH);
         user.setLogin(login);
-        user.setNickName(userDTO.getNickName());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
-        user.setImageUrl(userDTO.getImageUrl());
-        String langKey = userDTO.getLangKey();
-        if (StringUtils.isEmpty(langKey)) {
-            user.setLangKey(CommonsConstants.DEFAULT_LANGUAGE);
-        } else {
-            user.setLangKey(langKey);
-        }
+        user.setLangKey(CommonsConstants.DEFAULT_LANGUAGE);
         String encryptedPassword = RandomUtil.generatePassword();
         user.setPassword(encryptedPassword);
-        user.setResetKey(RandomUtil.generateResetKey());
-        user.setResetDate(Instant.now());
         user.setActivated(true);
-        if (userDTO.getAuthorities() != null) {
-            Set<Authority> authorities = userDTO.getAuthorities().stream()
-                    .filter(authority -> !AuthoritiesConstants.ADMIN.equals(authority))
-                    .map(authorityRepository::findById).filter(Optional::isPresent).map(Optional::get)
-                    .collect(Collectors.toSet());
-            user.setAuthorities(authorities);
-        }
+
+        Set<Authority> authorities = Arrays.asList(AuthoritiesConstants.USER).stream()
+                .map(authorityRepository::findById).filter(Optional::isPresent).map(Optional::get)
+                .collect(Collectors.toSet());
+        user.setAuthorities(authorities);
         userRepository.save(user);
-        log.debug("Created Information for User: {}", user);
         return user;
     }
 

@@ -23,5 +23,9 @@ public interface ErrorCodeContants {
     String DATA_FORMAT = "DATA_FORMAT";
     String DECODE_FAIL = "DECODE_FAIL";
     String DATA_EXISTS = "DATA_EXISTS";
+    
+    
+    String CANNOT_GET_PRICE = "CANNOT_GET_PRICE";
+    String ORDER_STATUS_ERROR = "ORDER_STATUS_ERROR";
 
 }

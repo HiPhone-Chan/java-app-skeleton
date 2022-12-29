@@ -1,6 +1,6 @@
 package tech.hiphone.weixin.web.rest;
 
-import java.util.Collections;
+import java.util.Map;
 
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,10 +32,11 @@ import tech.hiphone.weixin.service.WxUserService;
 import tech.hiphone.weixin.web.vm.AuthorizationCodeVM;
 import tech.hiphone.weixin.web.vm.RegisterVM;
 
+@SuppressWarnings("unchecked")
 @RestController
 public class WxUserResource {
 
-    public final static int CODE_EXPIRE_TIME = 5 * 60 * 1000; // mill
+    public final static int DEFAULT_CODE_EXPIRE_TIME = 5 * 60 * 1000; // mill
 
     private static final Logger log = LoggerFactory.getLogger(WxUserResource.class);
 
@@ -58,22 +58,18 @@ public class WxUserResource {
     @PostMapping(path = "/api/weixin/authenticate")
     @PermitAll()
     public ResponseEntity<?> authorize(@RequestBody AuthorizationCodeVM code, HttpServletRequest request) {
-        try {
-            WeixinAuthenticationToken authenticationToken = new WeixinAuthenticationToken(code.getAppId(),
-                    code.getCode());
-            Authentication authentication = this.authenticationManagerBuilder.getObject()
-                    .authenticate(authenticationToken);
+        log.debug("Request to weixin authorize");
+        String appId = code.getAppId();
+        WeixinAuthenticationToken authenticationToken = new WeixinAuthenticationToken(appId, code.getCode());
+        Authentication authentication = this.authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = tokenProvider.createToken(authentication, CODE_EXPIRE_TIME);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = tokenProvider.createToken(authentication, DEFAULT_CODE_EXPIRE_TIME);
 
-            HttpHeaders httpHeaders = new HttpHeaders();
-            return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
-        } catch (AuthenticationException ae) {
-            log.trace("Authentication exception trace: {}", ae);
-            return new ResponseEntity<>(Collections.singletonMap("AuthenticationException", ae.getLocalizedMessage()),
-                    HttpStatus.UNAUTHORIZED);
-        }
+        Map<String, Object> result = (Map<String, Object>) authentication.getDetails();
+        wxUserService.saveWxUser(appId, result);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
     }
 
     @PostMapping(path = "/api/weixin/register")
@@ -96,13 +92,5 @@ public class WxUserResource {
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, JWTFilter.BEARER_PREFIX + jwt);
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
     }
-
-//    @GetMapping("/api/weixin/user/info")
-//    @Secured({ WxAuthoritiesConstants.WEIXIN })
-//    public UserInfoVM getUserInfo( ) {
-//        Map<String, Object> result = weixinService.getUserInfo(type);
-//        log.debug("user info {}", result);
-//        return JsonUtil.convertValue(result, UserInfoVM.class);
-//    }
 
 }
