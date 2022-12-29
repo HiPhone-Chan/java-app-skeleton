@@ -13,6 +13,7 @@
     <module>rbac</module>
     <module>weixin</module>
     <module>cms</module>
+    <module>shopping-mall</module>
   </modules>
 
   <properties>

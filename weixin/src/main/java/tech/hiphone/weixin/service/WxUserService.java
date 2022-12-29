@@ -1,24 +1,32 @@
 package tech.hiphone.weixin.service;
 
+import java.time.Instant;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tech.hiphone.commons.constants.AuthoritiesConstants;
+import tech.hiphone.commons.constants.CommonsConstants;
 import tech.hiphone.commons.constants.ErrorCodeContants;
+import tech.hiphone.commons.domain.Authority;
 import tech.hiphone.commons.domain.User;
 import tech.hiphone.commons.exceptioin.ServiceException;
+import tech.hiphone.commons.repository.AuthorityRepository;
 import tech.hiphone.commons.repository.UserRepository;
-import tech.hiphone.commons.service.UserService;
 import tech.hiphone.commons.service.dto.AdminUserDTO;
+import tech.hiphone.framework.security.RandomUtil;
 import tech.hiphone.weixin.domain.WxUser;
 import tech.hiphone.weixin.domain.id.WxUserId;
 import tech.hiphone.weixin.repository.WxUserRepository;
@@ -34,13 +42,14 @@ public class WxUserService {
 
     private final WxUserRepository wxUserRepository;
 
-    private final UserService userService;
+    private final AuthorityRepository authorityRepository;
 
-    public WxUserService(UserRepository userRepository, WxUserRepository wxUserRepository, UserService userService) {
+    public WxUserService(UserRepository userRepository, WxUserRepository wxUserRepository,
+            AuthorityRepository authorityRepository) {
         super();
         this.userRepository = userRepository;
         this.wxUserRepository = wxUserRepository;
-        this.userService = userService;
+        this.authorityRepository = authorityRepository;
     }
 
 //    public Map<String, Object> getUserInfo(String appId) {
@@ -131,7 +140,39 @@ public class WxUserService {
         AdminUserDTO userDTO = new AdminUserDTO();
         userDTO.setLogin(LOGIN_PREFIX + UUID.randomUUID().toString().replaceAll("-", ""));
         userDTO.setAuthorities(authoritySet);
-        return userService.createUser(userDTO);
+        return createUser(userDTO);
+    }
+
+    public User createUser(AdminUserDTO userDTO) {
+        User user = new User();
+        String login = userDTO.getLogin().toLowerCase(Locale.ENGLISH);
+        user.setLogin(login);
+        user.setNickName(userDTO.getNickName());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+        user.setImageUrl(userDTO.getImageUrl());
+        String langKey = userDTO.getLangKey();
+        if (StringUtils.isEmpty(langKey)) {
+            user.setLangKey(CommonsConstants.DEFAULT_LANGUAGE);
+        } else {
+            user.setLangKey(langKey);
+        }
+        String encryptedPassword = RandomUtil.generatePassword();
+        user.setPassword(encryptedPassword);
+        user.setResetKey(RandomUtil.generateResetKey());
+        user.setResetDate(Instant.now());
+        user.setActivated(true);
+        if (userDTO.getAuthorities() != null) {
+            Set<Authority> authorities = userDTO.getAuthorities().stream()
+                    .filter(authority -> !AuthoritiesConstants.ADMIN.equals(authority))
+                    .map(authorityRepository::findById).filter(Optional::isPresent).map(Optional::get)
+                    .collect(Collectors.toSet());
+            user.setAuthorities(authorities);
+        }
+        userRepository.save(user);
+        log.debug("Created Information for User: {}", user);
+        return user;
     }
 
 }
