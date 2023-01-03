@@ -36,7 +36,7 @@ import tech.hiphone.weixin.web.vm.RegisterVM;
 @RestController
 public class WxUserResource {
 
-    public final static int DEFAULT_CODE_EXPIRE_TIME = 5 * 60 * 1000; // mill
+    public final static int DEFAULT_CODE_EXPIRE_TIME = 2 * 3600 * 1000; // mill
 
     private static final Logger log = LoggerFactory.getLogger(WxUserResource.class);
 

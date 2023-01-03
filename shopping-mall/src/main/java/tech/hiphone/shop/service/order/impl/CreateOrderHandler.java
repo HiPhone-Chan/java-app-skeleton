@@ -9,12 +9,11 @@ import tech.hiphone.commons.utils.JsonUtil;
 import tech.hiphone.shop.constants.OrderStatus;
 import tech.hiphone.shop.domain.OrderInfo;
 import tech.hiphone.shop.repository.OrderInfoRepository;
-import tech.hiphone.shop.service.GoodsService;
-import tech.hiphone.shop.service.PricingService;
-import tech.hiphone.shop.service.order.OrderExtraService;
+import tech.hiphone.shop.service.goods.GoodsService;
 import tech.hiphone.shop.service.order.OrderHandler;
 import tech.hiphone.shop.service.order.dto.OrderInfoDTO;
 import tech.hiphone.shop.service.order.dto.PricingDTO;
+import tech.hiphone.shop.service.order.extra.OrderExtraService;
 import tech.hiphone.shop.utils.OrderUtil;
 
 @Service
@@ -24,8 +23,6 @@ public class CreateOrderHandler implements OrderHandler {
     @Autowired
     private OrderInfoRepository orderInfoRepository;
 
-    @Autowired
-    private PricingService pricingService;
 
     @Autowired
     private OrderExtraService orderExtraService;
@@ -42,23 +39,23 @@ public class CreateOrderHandler implements OrderHandler {
         OrderInfoDTO orderInfoDTO = (OrderInfoDTO) reqValue;
         orderInfo = createOrder(orderInfoDTO);
         orderInfoRepository.save(orderInfo);
-        pricingService.save(orderInfo, orderInfoDTO.getPricingInfo());
+        goodsService.save(orderInfo, orderInfoDTO.getPricingInfo());
         orderExtraService.save(orderInfo, orderInfoDTO.getExtraInfo());
         return orderInfo;
     }
 
     public OrderInfo createOrder(OrderInfoDTO orderInfoDTO) {
-        goodsService.checkGoodsBought(orderInfoDTO);
+        goodsService.checkSituation(orderInfoDTO);
         OrderInfo orderInfo = new OrderInfo();
         long orderId = OrderUtil.generateOrderId();
         orderInfo.setId(String.valueOf(orderId));
 
         orderInfo.setStatus(OrderStatus.CREATED);
-        orderInfo.setType(orderInfoDTO.getType());
+        orderInfo.setAppId(orderInfoDTO.getAppId());
         orderInfo.setTitle(orderInfoDTO.getTitle());
         orderInfo.setDescription(orderInfoDTO.getDescription());
 
-        PricingDTO priceInfo = pricingService.getPrice(orderInfoDTO.getPricingInfo());
+        PricingDTO priceInfo = goodsService.getPrice(orderInfoDTO.getPricingInfo());
         orderInfo.setPrice(priceInfo.getPrice());
         orderInfo.setPricingInfo(JsonUtil.toJsonString(priceInfo));
         orderInfo.setExtraInfo(JsonUtil.toJsonString(orderInfoDTO.getExtraInfo()));

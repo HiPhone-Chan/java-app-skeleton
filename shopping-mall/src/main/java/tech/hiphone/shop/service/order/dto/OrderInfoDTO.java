@@ -8,8 +8,7 @@ public class OrderInfoDTO {
 
     private String id;
 
-    // OrderType
-    private String type;
+    private String appId;
     // 外部对应的订单id
     private String outOrderId;
     // OrderChannel
@@ -36,7 +35,7 @@ public class OrderInfoDTO {
 
     public OrderInfoDTO(OrderInfo orderInfo) {
         this.id = orderInfo.getId();
-        this.type = orderInfo.getType();
+        this.appId = orderInfo.getAppId();
         this.channel = orderInfo.getChannel();
         this.price = orderInfo.getPrice();
         this.originalAmount = orderInfo.getOriginalAmount();
@@ -51,7 +50,7 @@ public class OrderInfoDTO {
     public OrderInfo toOrderInfo() {
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setId(this.id);
-        orderInfo.setType(this.type);
+        orderInfo.setAppId(this.appId);
         orderInfo.setChannel(this.channel);
         orderInfo.setPrice(this.price);
         orderInfo.setOriginalAmount(this.originalAmount);
@@ -72,12 +71,12 @@ public class OrderInfoDTO {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getAppId() {
+        return appId;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
     public String getOutOrderId() {

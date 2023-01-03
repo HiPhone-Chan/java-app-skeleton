@@ -20,7 +20,7 @@ import tech.hiphone.framework.config.SystemProperties;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-public class SecurityConfiguration {
+public class SecurityTestConfiguration {
 
     private final SystemProperties systemProperties;
 
@@ -28,7 +28,7 @@ public class SecurityConfiguration {
 
     private final CorsFilter corsFilter;
 
-    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter,
+    public SecurityTestConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter,
             SystemProperties systemProperties) {
         super();
         this.tokenProvider = tokenProvider;

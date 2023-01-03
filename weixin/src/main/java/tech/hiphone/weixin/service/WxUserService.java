@@ -1,6 +1,7 @@
 package tech.hiphone.weixin.service;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -95,6 +96,16 @@ public class WxUserService {
 
         wxUser.setUser(user);
         wxUserRepository.save(wxUser);
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserWithAuthorities(WxUserId wxUserId) {
+        User user = wxUserRepository.findById(wxUserId).map(WxUser::getUser)
+                .orElseThrow(() -> new ServiceException(ErrorCodeContants.USER_NOT_EXISTS));
+        // could not initialize proxy - no Session
+        Set<Authority> authorities = new HashSet<>(user.getAuthorities());
+        user.setAuthorities(authorities);
+        return user;
     }
 
     private WxUser getWxUser(String appId, String openId, String unionId) {

@@ -4,20 +4,10 @@ import tech.hiphone.shop.domain.common.Price;
 
 // 计价信息
 public class PricingDTO {
-    // PricingType
-    private String type;
 
     private Price price;
 
-    private Object data;
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+    private GoodsInfoDTO goodsInfo;
 
     public Price getPrice() {
         return price;
@@ -27,12 +17,12 @@ public class PricingDTO {
         this.price = price;
     }
 
-    public Object getData() {
-        return data;
+    public GoodsInfoDTO getGoodsInfo() {
+        return goodsInfo;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setGoodsInfo(GoodsInfoDTO goodsInfo) {
+        this.goodsInfo = goodsInfo;
     }
 
 }

@@ -19,7 +19,7 @@ public class OrderInfo extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 
-    public final static int EXPIRE_TIME = 30 * 60;
+    public final static int DEFAULT_EXPIRE_TIME = 30 * 60;
 
     @Id
     @Column(name = "id", length = 20)
@@ -27,9 +27,9 @@ public class OrderInfo extends AbstractAuditingEntity {
 
     @Version
     private Integer version;
-    // OrderType (对应于商家账户分类)
-    @Column(name = "type", length = 15)
-    private String type;
+    // 对应实际支付使用渠道的appId
+    @Column(name = "app_id", length = 15)
+    private String appId;
     // 外部对应的订单id
     @Column(name = "out_order_id", length = 127)
     private String outOrderId;
@@ -60,7 +60,7 @@ public class OrderInfo extends AbstractAuditingEntity {
 
     // 过期时间
     @Column(name = "expiration_date")
-    private Instant expirationDate = Instant.now().plusSeconds(EXPIRE_TIME);
+    private Instant expirationDate = Instant.now().plusSeconds(DEFAULT_EXPIRE_TIME);
 
     // 处理次数
     @Column(name = "process_times")
@@ -88,12 +88,12 @@ public class OrderInfo extends AbstractAuditingEntity {
         this.version = version;
     }
 
-    public String getType() {
-        return type;
+    public String getAppId() {
+        return appId;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
     public String getOutOrderId() {

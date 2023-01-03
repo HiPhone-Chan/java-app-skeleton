@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import tech.hiphone.shop.constants.OrderStatus;
 import tech.hiphone.shop.domain.OrderInfo;
 import tech.hiphone.shop.repository.OrderInfoRepository;
-import tech.hiphone.shop.service.GoodsService;
 import tech.hiphone.shop.service.coupon.CouponService;
 import tech.hiphone.shop.service.event.TradeEvent;
+import tech.hiphone.shop.service.goods.GoodsService;
 import tech.hiphone.shop.service.order.OrderHandler;
 import tech.hiphone.shop.service.order.dto.TradeDTO;
 

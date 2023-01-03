@@ -9,34 +9,28 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.transaction.annotation.Transactional;
 
-import tech.hiphone.commons.constants.ErrorCodeContants;
 import tech.hiphone.commons.domain.Authority;
 import tech.hiphone.commons.domain.User;
-import tech.hiphone.commons.exceptioin.ServiceException;
-import tech.hiphone.weixin.domain.WxUser;
 import tech.hiphone.weixin.domain.id.WxUserId;
-import tech.hiphone.weixin.repository.WxUserRepository;
+import tech.hiphone.weixin.service.WxUserService;
 
-// 微信切换应用app认真
+// 微信切换应用app认证
 public class SwitchWeixinUserAuthenticationProvider implements AuthenticationProvider {
 
-    private final WxUserRepository wxUserRepository;
+    private final WxUserService wxUserService;
 
-    public SwitchWeixinUserAuthenticationProvider(WxUserRepository wxUserRepository) {
-        super();
-        this.wxUserRepository = wxUserRepository;
+    public SwitchWeixinUserAuthenticationProvider(WxUserService wxUserService) {
+        this.wxUserService = wxUserService;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         WxUserId wxUserId = (WxUserId) authentication.getPrincipal();
 
-        User user = wxUserRepository.findById(wxUserId).map(WxUser::getUser).orElseThrow();
-
-        if (user == null) {
-            throw new ServiceException(ErrorCodeContants.USER_NOT_EXISTS);
-        }
+        User user = wxUserService.getUserWithAuthorities(wxUserId);
 
         List<GrantedAuthority> authorities = user.getAuthorities().stream().map(Authority::getName)
                 .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
