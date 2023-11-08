@@ -1,0 +1,65 @@
+logging:
+  level:
+    ROOT: DEBUG
+    "[org.hibernate.SQL]": DEBUG
+    "[tech.hiphone.app]": DEBUG    
+    
+spring:
+  devtools:
+    restart:
+      enabled: true
+      additional-exclude: static/**,.h2.server.properties
+    livereload:
+      enabled: false # we use Webpack dev server + BrowserSync for livereload
+  jackson:
+    serialization:
+      indent-output: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:file:./target/h2db/app;DB_CLOSE_DELAY=-1
+    username: app
+    password: null
+#    url: jdbc:mysql://localhost:3306/app?useSSL=false&createDatabaseIfNotExist=true
+#    username: root
+#    password: root
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+  jpa:
+    show-sql: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+  h2:
+    console:
+      enabled: false
+  messages:
+    cache-duration: PT1S # 1 second, see the ISO 8601 standard
+
+server:
+  port: 8083
+  servlet:
+    context-path: /app
+
+sys:
+  cache: # Cache configuration
+    ehcache: # Ehcache configuration
+      time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
+      max-entries: 100 # Number of objects in each cache entry
+  cors:
+    allowed-origin-patterns: '*'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count'
+    allow-credentials: true
+    max-age: 1800
+  security:
+    authentication:
+      jwt:
+      # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+        base64-secret: glxxC0Yc0Pqp2qq+NAhVKEgC/mUwIi0xptBJyZxXE290YmtGY4LRj0Qdr5tcpfa1t6hbVpYf9AoB+h0NU22KhA==
+        secret: wCyYpboXnOq94s6m1BkCD0D323MTXlUXj9kTbA15
+        token-validity-in-seconds: 86400
+        token-validity-in-seconds-for-remember-me: 2592000
+
+#app:
